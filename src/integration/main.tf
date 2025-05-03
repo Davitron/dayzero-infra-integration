@@ -59,24 +59,19 @@ resource "helm_release" "argocd" {
 #   YAML
 # }
 
-
-
-
-
-
 resource "kubectl_manifest" "cluster_secret" {
   for_each = local.cluster_data
   yaml_body  = <<-YAML
   apiVersion: v1
   kind: Secret
   metadata:
-    name: "${each.value.cluster_name}-secret"
+    name: "${each.value.cluster_name}"
     namespace: argocd
     labels:
       argocd.argoproj.io/secret-type: cluster
       cluster_mode: "${each.value.cluster_mode}"
-      cluster_alias: 
-  type: Opaque
+      cluster_alias: "${each.value.cluster_alias}"
+      type: Opaque
   stringData:
     name: "${each.value.cluster_name}"
     server: "${each.value.cluster_endpoint}"
@@ -93,5 +88,3 @@ resource "kubectl_manifest" "cluster_secret" {
       }
   YAML
 }
-
-

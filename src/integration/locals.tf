@@ -11,6 +11,7 @@ locals {
             cluster_certificate_authority_data = data.aws_eks_cluster.clusters[k].certificate_authority[0].data
             cluster_mode = data.terraform_remote_state.workspaces[k].outputs.cluster_mode
             argocd_access_role = lookup(data.terraform_remote_state.workspaces[k].outputs, "argocd_access_role", "")
+            cluster_alias = lookup(data.terraform_remote_state.workspaces[k].outputs, "cluster_alias", "")
         } if data.terraform_remote_state.workspaces[k].outputs.cluster_mode == "workload"
     }
 }
