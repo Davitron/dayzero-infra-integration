@@ -61,30 +61,20 @@ resource "helm_release" "argocd" {
 
 resource "kubectl_manifest" "cluster_secret" {
   for_each = local.cluster_data
-  yaml_body  = <<-YAML
-  apiVersion: v1
-  kind: Secret
-  metadata:
-    name: "${each.value.cluster_name}"
-    namespace: argocd
-    labels:
-      argocd.argoproj.io/secret-type: cluster
-      cluster_mode: "${each.value.cluster_mode}"
-      env: "${each.value.cluster_alias}"
-      type: Opaque
-  stringData:
-    name: "${each.value.cluster_name}"
-    server: "${each.value.cluster_endpoint}"
-    config: |
-      {
-        "awsAuthConfig": {
-          "clusterName": "${each.value.cluster_name}",
-          "roleARN": "${each.value.argocd_access_role}",
-        },
-        "tlsClientConfig": {
-          "insecure": false,
-          "caData": "${each.value.cluster_certificate_authority_data}"
-        }        
+  yaml_body  = templatefile("${path.module}/cluster-secret.yaml.tpl", {
+    cluster_name = each.value.cluster_name
+    cluster_mode  = each.value.cluster_mode
+    cluster_alias = each.value.cluster_alias
+    cluster_endpoint = each.value.cluster_endpoint
+    config_json = jsonencode({
+      awsAuthConfig = {
+        clusterName = each.value.cluster_name
+        roleARN     = each.value.argocd_access_role
       }
-  YAML
+      tlsClientConfig = {
+        insecure = false
+        caData   = each.value.cluster_certificate_authority_data
+      }
+    })
+  })
 }
