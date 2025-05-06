@@ -77,4 +77,5 @@ resource "kubectl_manifest" "cluster_secret" {
       }
     })
   })
+  
 }
