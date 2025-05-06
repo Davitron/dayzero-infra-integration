@@ -16,8 +16,3 @@ locals {
         } if data.terraform_remote_state.workspaces[k].outputs.cluster_mode == "workload"
     }
 }
-
-# output "cluster_data" {
-#   value = local.cluster_data
-
-# }
