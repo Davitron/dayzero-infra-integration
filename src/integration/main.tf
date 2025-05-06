@@ -70,7 +70,7 @@ resource "kubectl_manifest" "cluster_secret" {
     labels:
       argocd.argoproj.io/secret-type: cluster
       cluster_mode: "${each.value.cluster_mode}"
-      cluster_alias: "${each.value.cluster_alias}"
+      env: "${each.value.cluster_alias}"
       type: Opaque
   stringData:
     name: "${each.value.cluster_name}"
