@@ -1,6 +1,7 @@
 locals {
     workspaces = {
         "mgnt" = "management-eks"
+        "dev"  = "development-eks"
     }
 
     cluster_data = {
