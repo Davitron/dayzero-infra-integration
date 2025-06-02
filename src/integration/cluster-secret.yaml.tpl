@@ -7,6 +7,10 @@ metadata:
     argocd.argoproj.io/secret-type: cluster
     cluster_mode: "${cluster_mode}"
     env: "${cluster_alias}"
+  annotations:
+%{ for k, v in cluster_annotations ~}
+    ${k}: "${v}"
+%{ endfor ~}
 type: Opaque
 stringData:
   name: "${cluster_name}"

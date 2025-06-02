@@ -66,6 +66,7 @@ resource "kubectl_manifest" "cluster_secret" {
     cluster_mode     = each.value.cluster_mode
     cluster_alias    = each.value.cluster_alias
     cluster_endpoint = each.value.cluster_endpoint
+    cluster_annotations   = each.value.annotations
     config_json = jsonencode({
       awsAuthConfig = {
         clusterName = each.value.cluster_name
