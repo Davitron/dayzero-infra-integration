@@ -61,10 +61,10 @@ resource "helm_release" "argocd" {
 
 resource "kubectl_manifest" "cluster_secret" {
   for_each = local.cluster_data
-  yaml_body  = templatefile("${path.module}/cluster-secret.yaml.tpl", {
-    cluster_name = each.value.cluster_name
-    cluster_mode  = each.value.cluster_mode
-    cluster_alias = each.value.cluster_alias
+  yaml_body = templatefile("${path.module}/cluster-secret.yaml.tpl", {
+    cluster_name     = each.value.cluster_name
+    cluster_mode     = each.value.cluster_mode
+    cluster_alias    = each.value.cluster_alias
     cluster_endpoint = each.value.cluster_endpoint
     config_json = jsonencode({
       awsAuthConfig = {
@@ -77,5 +77,4 @@ resource "kubectl_manifest" "cluster_secret" {
       }
     })
   })
-  
 }
