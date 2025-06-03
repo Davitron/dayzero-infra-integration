@@ -11,7 +11,7 @@ metadata:
 %{ for k, v in cluster_annotations ~}
     ${k}: "${v}"
 %{ endfor ~}
-type: Opaque
+type: Opaque  
 stringData:
   name: "${cluster_name}"
   server: "${cluster_endpoint}"

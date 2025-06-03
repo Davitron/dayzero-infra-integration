@@ -67,15 +67,6 @@ resource "kubectl_manifest" "cluster_secret" {
     cluster_alias    = each.value.cluster_alias
     cluster_endpoint = each.value.cluster_endpoint
     cluster_annotations   = each.value.annotations
-    config_json = jsonencode({
-      awsAuthConfig = {
-        clusterName = each.value.cluster_name
-        roleARN     = each.value.argocd_access_role
-      }
-      tlsClientConfig = {
-        insecure = false
-        caData   = each.value.cluster_certificate_authority_data
-      }
-    })
+    config_json = each.value.config_json
   })
 }
