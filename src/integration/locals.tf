@@ -21,6 +21,7 @@ locals {
         clusterMode        = data.terraform_remote_state.workspaces[k].outputs.cluster_mode
         region             = data.terraform_remote_state.workspaces[k].outputs.region
         clusterEndpoint    = data.terraform_remote_state.workspaces[k].outputs.cluster_endpoint
+        oidcUrl            = data.terraform_remote_state.workspaces[k].outputs.cluster_oidc_url
         crossplaneIAMRole  = data.terraform_remote_state.workspaces[k].outputs.crossplane_iam_role
         certManagerIAMRole = data.terraform_remote_state.workspaces[k].outputs.certmanager_iam_role
         externalDNSIAMRole = data.terraform_remote_state.workspaces[k].outputs.external_dns_iam_role
