@@ -26,6 +26,7 @@ locals {
         certManagerIAMRole = data.terraform_remote_state.workspaces[k].outputs.certmanager_iam_role
         externalDNSIAMRole = data.terraform_remote_state.workspaces[k].outputs.external_dns_iam_role
         vaultIAMRole       = try(data.terraform_remote_state.workspaces[k].outputs.vault_iam_role, "not_set")
+        environmentName    = k
       }
 
       config_json = data.terraform_remote_state.workspaces[k].outputs.cluster_mode == "workload" ? jsonencode({
